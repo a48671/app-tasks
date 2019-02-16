@@ -22,20 +22,33 @@ const initialState = {
             status: 0,
         }
     ],
-    total_task_count: 5
+    total_task_count: 5,
+    pageNumber: 1
 }
 
 export default function rootReducer(state=initialState, action) {
-    const {tasks, total_task_count} = state;
+    const {tasks, total_task_count, pageNumber} = state;
     
     const {type, payload} = action;
     
     switch(type) {
         
-        case 'ADD_TASK':
+        case 'GETTING_TASKS_START':
+
+            return state;
+        
+        case 'GETTING_TASKS':
 
             return ({
-                ...state
+                ...state,
+                ...payload.tasks
+            });
+        
+        case 'CHANGE_PAGE':
+
+            return ({
+                ...state,
+                pageNumber: payload.pageNumber
             });
 
         default: 

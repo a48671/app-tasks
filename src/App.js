@@ -10,22 +10,53 @@ import Button from './components/Button/Button';
 import PageNumber from './components/PageNumber/PageNumber';
 import Task from './components/Task/Task';
 
-import {addTask} from './redux/actions/actions';
+import {gettingTasks, changePage} from './redux/actions/actions';
 
 class App extends Component {
 
   static propTypes = {
-    addTask: PropTypes.func
+    tasks: PropTypes.array,
+    pageNumber: PropTypes.number,
+    totalTasks: PropTypes.number,
+    gettingTasks: PropTypes.func,
+    changePage: PropTypes.func 
+  }
 
-}
+  static defaultProps = {
+    tasks: [],
+    pageNumber: 1,
+    totalTasks: 0,
+    gettingTasks: () => null,
+    changePage: () => null
+  }
 
-static defaultProps = {
-    addTask: () => null
-}
+  componentDidMount() {
+    this.props.gettingTasks();
+  }
 
   render() {
 
-    const {addTask} = this.props;
+    const {tasks, totalTasks, changePage, pageNumber} = this.props;
+
+    const renderPagination = () => {
+      
+      let pageQuantity = totalTasks / 3; // 3 - quantity tasks on one page
+      if(totalTasks % 3 !== 0) pageQuantity += 1;
+
+      return(
+        Array.from({length: pageQuantity}).map((none, index) => {
+          const currentPageNumber = index + 1;
+          return(
+            <PageNumber 
+              key={index}
+              type={pageNumber === currentPageNumber ? 'clearWhite' : 'white'}
+              onClickHandler={() =>changePage(currentPageNumber)}
+            > 
+              {currentPageNumber}
+            </PageNumber>
+          );
+        })
+    )};
 
     return (
       <React.Fragment>
@@ -35,30 +66,27 @@ static defaultProps = {
             <Button type="white">By name</Button>
             <Button type="white">By email</Button>
             <Button type="white">By order</Button>
-            <Button onClickHandler={addTask} type="white">Add task</Button>
+            <Button type="white">Add task</Button>
             <Button type="green">Sign in</Button>
           </Control>
           <Container>
-            <Task
-              name="Andrey"
-              email="andrey@mail.ru"
-              text="Text"
-              checked={false}
-            />
-            <Task
-              name="Andrey"
-              email="andrey@mail.ru"
-              text="Text Text"
-              checked={true}
-            />
+            {
+              tasks.map((task, index) => (
+                <Task
+                  key={index}
+                  name={task.username}
+                  email={task.email}
+                  text={task.text}
+                  checked={task.status ? true : false}
+                />
+              ))
+            }
           </Container>
         </Wrapper>
         <Footer>
           <Container>
               <Pagination>
-                <PageNumber>1</PageNumber>
-                <PageNumber>2</PageNumber>
-                <PageNumber>3</PageNumber>
+                {renderPagination()}
               </Pagination>
           </Container>
         </Footer>
@@ -69,13 +97,16 @@ static defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    state
+    tasks: state.tasks,
+    pageNumber: state.pageNumber,
+    totalTasks: state.total_task_count
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addTask: () => dispatch(addTask())
+    gettingTasks: () => dispatch(gettingTasks()),
+    changePage: pageNumber => dispatch(changePage(pageNumber))
   }
 }
 

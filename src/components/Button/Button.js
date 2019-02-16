@@ -21,8 +21,6 @@ export default class Button extends PureComponent {
 
     const {children, type, onClickHandler} = this.props;
 
-    console.log(onClickHandler);
-
     return (
       <Wrapper
         type={type}

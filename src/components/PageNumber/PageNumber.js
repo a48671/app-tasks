@@ -7,20 +7,25 @@ export default class PageNumber extends PureComponent {
 
     static propTypes = {
         children: PropTypes.node,
-        type: PropTypes.string
+        type: PropTypes.string,
+        onClickHandler: PropTypes.func
     }
 
     static defaultProps = {
         children: null,
-        type: 'white'
+        type: 'white',
+        onClickHandler: () => null
     }
 
   render() {
 
-    const {children, type} = this.props;
+    const {children, type, onClickHandler} = this.props;
 
     return (
-        <Wrapper type={type}>
+        <Wrapper
+            type={type}
+            onClick={onClickHandler}
+        >
             {children}
         </Wrapper>
     )
