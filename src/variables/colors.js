@@ -27,8 +27,8 @@ export const button = (type) => {
                 border: 1px solid ${colors.blue};
                 &:hover {
                     background-color: transparent;
-                    color: ${colors.white};
-                    border: 1px solid ${colors.white};
+                    color: ${colors.blue};
+                    border: 1px solid ${colors.blue};
                 }
             `);
 
@@ -37,6 +37,11 @@ export const button = (type) => {
                 background-color: ${colors.blueDark};
                 color: ${colors.white};
                 border: 1px solid ${colors.blueDark};
+                &:hover {
+                    background-color: transparent;
+                    color: ${colors.blueDark};
+                    border: 1px solid ${colors.blueDark};
+                }
             `);
 
         case 'clearWhite':
@@ -49,7 +54,7 @@ export const button = (type) => {
         case 'green':
             return (`
                 background-color: ${colors.green};
-                color: ${colors.blueDark};
+                color: ${colors.white};
                 border: 1px solid transparent;
                 &:hover {
                     background-color: transparent;

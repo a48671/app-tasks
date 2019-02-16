@@ -9,6 +9,7 @@ import Control from './components/Control/Control';
 import Button from './components/Button/Button';
 import PageNumber from './components/PageNumber/PageNumber';
 import Task from './components/Task/Task';
+import CreateTask from './components/CreateTask/CreateTask';
 
 import {gettingTasks} from './redux/actions/actions';
 
@@ -66,8 +67,6 @@ class App extends Component {
           );
         })
     )};
-
-    console.log(this.props.sortType)
 
     return (
       <React.Fragment>
@@ -128,6 +127,7 @@ class App extends Component {
                 {renderPagination()}
               </Pagination>
           </Container>
+          <CreateTask />
         </Footer>
       </React.Fragment>
     );
