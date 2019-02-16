@@ -10,7 +10,7 @@ import Button from './components/Button/Button';
 import PageNumber from './components/PageNumber/PageNumber';
 import Task from './components/Task/Task';
 
-import {gettingTasks, changePage} from './redux/actions/actions';
+import {gettingTasks} from './redux/actions/actions';
 
 class App extends Component {
 
@@ -19,7 +19,8 @@ class App extends Component {
     pageNumber: PropTypes.number,
     totalTasks: PropTypes.number,
     gettingTasks: PropTypes.func,
-    changePage: PropTypes.func 
+    sortType: PropTypes.string,
+    sortOrder: PropTypes.string
   }
 
   static defaultProps = {
@@ -27,16 +28,24 @@ class App extends Component {
     pageNumber: 1,
     totalTasks: 0,
     gettingTasks: () => null,
-    changePage: () => null
+    sortType: 'id',
+    sortOrder: 'asc'
   }
 
   componentDidMount() {
-    this.props.gettingTasks();
+    this.props.gettingTasks(1, 'id', 'asc');
   }
 
   render() {
 
-    const {tasks, totalTasks, changePage, pageNumber} = this.props;
+    const {
+      tasks, 
+      totalTasks, 
+      pageNumber, 
+      sortType,
+      sortOrder,
+      gettingTasks
+    } = this.props;
 
     const renderPagination = () => {
       
@@ -50,7 +59,7 @@ class App extends Component {
             <PageNumber 
               key={index}
               type={pageNumber === currentPageNumber ? 'clearWhite' : 'white'}
-              onClickHandler={() =>changePage(currentPageNumber)}
+              onClickHandler={() =>gettingTasks(currentPageNumber, sortType, sortOrder)}
             > 
               {currentPageNumber}
             </PageNumber>
@@ -58,16 +67,46 @@ class App extends Component {
         })
     )};
 
+    console.log(this.props.sortType)
+
     return (
       <React.Fragment>
         <Wrapper>
           <Control>
-            <Button type="white">By status</Button>
-            <Button type="white">By name</Button>
-            <Button type="white">By email</Button>
-            <Button type="white">By order</Button>
-            <Button type="white">Add task</Button>
-            <Button type="green">Sign in</Button>
+            <Button
+              onClickHandler={() => gettingTasks(pageNumber, 'status', sortOrder)}
+              type={sortType === 'status' ? 'clearWhite' : "white"}
+            >
+              By status
+            </Button>
+            <Button
+              onClickHandler={() => gettingTasks(pageNumber, 'username' , sortOrder)}
+              type={sortType === 'username' ? 'clearWhite' : "white"}
+            >
+              By name
+            </Button>
+            <Button
+              onClickHandler={() => gettingTasks(pageNumber, 'email', sortOrder)}
+              type={sortType === 'email' ? 'clearWhite' : "white"}
+            >
+              By email
+            </Button>
+            <Button
+                onClickHandler={() => gettingTasks(pageNumber, sortType, sortOrder === 'asc' ? 'desc' : 'asc')}
+                type="blue"
+            >
+              {sortOrder === 'asc' ? 'Desc' : 'Asc'}
+            </Button>
+            <Button
+                type="white"
+            >
+              Add task
+            </Button>
+            <Button
+              type="green"
+            >
+              Sign in
+            </Button>
           </Control>
           <Container>
             {
@@ -99,14 +138,15 @@ function mapStateToProps(state) {
   return {
     tasks: state.tasks,
     pageNumber: state.pageNumber,
-    totalTasks: state.total_task_count
+    totalTasks: Number(state.total_task_count),
+    sortType: state.sortType, 
+    sortOrder: state.sortOrder
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    gettingTasks: () => dispatch(gettingTasks()),
-    changePage: pageNumber => dispatch(changePage(pageNumber))
+    gettingTasks: (pageNumber, sortType, sortOrder) => dispatch(gettingTasks(pageNumber, sortType, sortOrder)),
   }
 }
 

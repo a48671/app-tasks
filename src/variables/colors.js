@@ -20,6 +20,18 @@ export const button = (type) => {
                 }
             `);
 
+        case 'blue':
+            return (`
+                background-color: ${colors.blue};
+                color: ${colors.white};
+                border: 1px solid ${colors.blue};
+                &:hover {
+                    background-color: transparent;
+                    color: ${colors.white};
+                    border: 1px solid ${colors.white};
+                }
+            `);
+
         case 'blueDark':
             return (`
                 background-color: ${colors.blueDark};

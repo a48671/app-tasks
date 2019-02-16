@@ -5,6 +5,7 @@ import * as serviceWorker from './serviceWorker';
 
 import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
 import rootReducer from './redux/rootReducer';
 
 const composeEnhancers =
@@ -14,7 +15,7 @@ const composeEnhancers =
       // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
     }) : compose;
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware()));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
     <Provider store={store}>

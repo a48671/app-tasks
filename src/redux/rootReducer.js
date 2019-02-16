@@ -23,11 +23,13 @@ const initialState = {
         }
     ],
     total_task_count: 5,
-    pageNumber: 1
+    pageNumber: 1,
+    sortType: 'id', // id or username or email or status
+    sortOrder: 'asc' // asc or desc
 }
 
 export default function rootReducer(state=initialState, action) {
-    const {tasks, total_task_count, pageNumber} = state;
+    // const {} = state;
     
     const {type, payload} = action;
     
@@ -37,18 +39,14 @@ export default function rootReducer(state=initialState, action) {
 
             return state;
         
-        case 'GETTING_TASKS':
+        case 'GETTING_TASKS_SUCCESS':
 
             return ({
                 ...state,
-                ...payload.tasks
-            });
-        
-        case 'CHANGE_PAGE':
-
-            return ({
-                ...state,
-                pageNumber: payload.pageNumber
+                ...payload.tasks,
+                pageNumber: payload.pageNumber,
+                sortType: payload.sortType,
+                sortOrder: payload.sortOrder
             });
 
         default: 
