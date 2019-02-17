@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 import axios from 'axios';
 
-import {Buttons, Error} from './styled';
+import {Buttons} from './styled';
 
-import {hiddenCreateTask, gettingTasks} from '../../redux/actions/actions';
+import {hiddenPopup, gettingTasks} from '../../redux/actions/actions';
 
 import Overlay from '../Overlay/Overlay';
 import Dialog from '../Dialog/Dialog';
@@ -36,20 +36,20 @@ class CreateTask extends PureComponent {
     }
 
     static propTypes = {
-        hiddenCreateTask: PropTypes.func,
+        hiddenPopup: PropTypes.func,
         gettingTasks: PropTypes.func,
         totalTasks: PropTypes.number
     };
 
     static defaultProps = {
-        hiddenCreateTask: () => null,
+        hiddenPopup: () => null,
         gettingTasks: () => null,
         totalTasks: 1
     }
 
     render() {
 
-        const {hiddenCreateTask, gettingTasks, totalTasks} = this.props;
+        const {hiddenPopup, gettingTasks, totalTasks} = this.props;
 
         const {userName, email, text} = this.state;
 
@@ -88,7 +88,6 @@ class CreateTask extends PureComponent {
                     'https://uxcandy.com/~shapoval/test-task-backend/create/?developer=Andrey',
                     data
                 );
-                console.log(response.data);
                 if(response.data.status === 'error') {
                     if(response.data.message.username) {
                         const newUserName = {...userName};
@@ -116,10 +115,10 @@ class CreateTask extends PureComponent {
                     }
                 }
                 if(response.data.status === 'ok') {
-                    let pageQuantity = totalTasks / 3; // 3 - quantity tasks on one page
-                    if((totalTasks + 1) % 3 !== 0) pageQuantity += 1;
+                    let pageQuantity = Math.trunc(totalTasks / 3); // 3 - quantity tasks on one page
+                    if((totalTasks + 1) / 3 > pageQuantity) pageQuantity += 1;
                     gettingTasks(pageQuantity, 'id', 'asc');
-                    hiddenCreateTask();
+                    hiddenPopup();
                 }
             } catch(e) {
                 console.log(e);
@@ -127,7 +126,7 @@ class CreateTask extends PureComponent {
         }
 
         return (
-            <Overlay close={hiddenCreateTask}>
+            <Overlay close={hiddenPopup}>
                 <Dialog 
                     title="Create new task"
                 >
@@ -160,15 +159,10 @@ class CreateTask extends PureComponent {
                     />
                     <Buttons>
                         <Button
-                            type="blueDark"
-                        >
-                            Cancel
-                        </Button>
-                        <Button
                             type="blue"
                             onClickHandler={sendTaskHandler}
                         >
-                            Ok
+                            Add
                         </Button>
                     </Buttons>
                 </Dialog>
@@ -186,7 +180,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return({
         gettingTasks: (pageNumber, sortType, sortOrder) => dispatch(gettingTasks(pageNumber, sortType, sortOrder)),
-        hiddenCreateTask: () => dispatch(hiddenCreateTask())
+        hiddenPopup: () => dispatch(hiddenPopup())
     });
 }
 

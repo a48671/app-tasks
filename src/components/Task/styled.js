@@ -43,3 +43,19 @@ export const TaskCheckbox = styled.div.attrs({className: 'TaskCheckbox'})`
     border-right: 3px solid ${colors.white};
     opacity: ${props => props.checked ? '1' : '0.2'};
 `;
+
+export const Buttons = styled.div.attrs({className: 'TaskButtons'})`
+    display: block;
+    text-align: right;
+    padding: 10px 0 0;
+`;
+
+export const Button = styled.div.attrs({className: 'TaskButtons'})`
+    display: inline-block;
+    font-size: 14px;
+    color: ${colors.white};
+    cursor: pointer;
+    &:hover {
+        color: ${colors.blueDark};
+    }
+`;

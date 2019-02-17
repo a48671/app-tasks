@@ -5,7 +5,11 @@ import {
     GETTING_TASKS_SUCCESS, 
     GETTING_TASKS_ERROR,
     SHOW_CREATE_TASK,
-    HIDDEN_CREATE_TASK
+    HIDDEN_POPUP,
+    SHOW_SIGN_IN,
+    ADMIN,
+    GO_OUT,
+    CHANGE_TASK
 } from './actionTypes';
 
 export function gettingTasks(pageNumber, sortType, sortOrder) {
@@ -61,10 +65,45 @@ export function showCreateTask() {
     );
 }
 
-export function hiddenCreateTask() {
+export function showSignIn() {
     return(
         {
-            type: HIDDEN_CREATE_TASK
+            type: SHOW_SIGN_IN
+        }
+    );
+}
+
+export function hiddenPopup() {
+    return(
+        {
+            type: HIDDEN_POPUP
+        }
+    );
+}
+
+export function admin() {
+    return(
+        {
+            type: ADMIN
+        }
+    );
+}
+
+export function goOut() {
+    return(
+        {
+            type: GO_OUT
+        }
+    );
+}
+
+export function changeTaskAction(index) {
+    return(
+        {
+            type: CHANGE_TASK,
+            payload: {
+                index
+            }
         }
     );
 }

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import {Wrapper, TaskText, TaskHead, TaskHeadItem, TaskCheckbox} from './styled';
+import {Wrapper, TaskText, TaskHead, TaskHeadItem, TaskCheckbox, Buttons, Button} from './styled';
 
 export default class Task extends PureComponent {
 
@@ -10,18 +10,24 @@ export default class Task extends PureComponent {
         email: PropTypes.string,
         text: PropTypes.string,
         checked: PropTypes.bool,
+        edit: PropTypes.bool,
+        changeTaskAction: PropTypes.func,
+        index: PropTypes.number
     }
 
     static defaultProps = {
         name: 'white',
         email: '',
         text: '',
-        checked: false
+        checked: false,
+        edit: false,
+        changeTaskAction: () => null,
+        index: 0
     }
 
   render() {
 
-    const {name, email, text, checked} = this.props;
+    const {name, email, text, checked, edit, changeTaskAction, index} = this.props;
 
     return (
         <Wrapper checked={checked} >
@@ -37,6 +43,19 @@ export default class Task extends PureComponent {
             <TaskText>
                 {text}
             </TaskText>
+            {
+                edit 
+                    ?   <Buttons>
+                            <Button
+                                type="blueDark"
+                                onClick={() => changeTaskAction(index)}
+                            >
+                                Edit task
+                            </Button>
+                        </Buttons>
+                    :   null
+            }
+            
         </Wrapper>
     )
   }

@@ -12,7 +12,8 @@ export default class Input extends PureComponent {
         validated: PropTypes.bool,
         name: PropTypes.string,
         error: PropTypes.string,
-        placeholder: PropTypes.string
+        placeholder: PropTypes.string,
+        type: PropTypes.string
       }
     
     static defaultProps = {
@@ -22,12 +23,13 @@ export default class Input extends PureComponent {
         validated: true,
         name: '',
         error: '',
-        placeholder: ''
+        placeholder: '',
+        type: 'text'
     }
 
     render() {
 
-        const {title, value, onChangeHandler, validated, name, placeholder, error} = this.props;
+        const {title, value, onChangeHandler, validated, name, placeholder, error, type} = this.props;
 
         return (
             <Wrapper>
@@ -37,6 +39,7 @@ export default class Input extends PureComponent {
                    validated={validated} 
                    onChange={e => onChangeHandler(e, name)}
                    placeholder={placeholder}
+                   type={type}
                 />
                 {error ? <Error>{error}</Error> : null}
             </Wrapper>

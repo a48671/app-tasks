@@ -26,7 +26,11 @@ const initialState = {
     pageNumber: 1,
     sortType: 'id', // id or username or email or status
     sortOrder: 'asc', // asc or desc
-    createTask: false
+    createTask: false,
+    signIn: false,
+    admin: false,
+    changeTask: false,
+    indexChangingTask: null
 }
 
 export default function rootReducer(state=initialState, action) {
@@ -57,11 +61,50 @@ export default function rootReducer(state=initialState, action) {
                 createTask: true
             });
 
-        case 'HIDDEN_CREATE_TASK':
+        case 'SHOW_SIGN_IN':
 
             return({
                 ...state,
-                createTask: false
+                signIn: true
+            });
+
+        case 'CHANGE_TASK':
+
+            return({
+                ...state,
+                changeTask: true,
+                indexChangingTask: payload.index
+            });
+
+        case 'HIDDEN_POPUP':
+
+            return({
+                ...state,
+                createTask: false,
+                signIn: false,
+                changeTask: false
+            });
+
+        case 'ADMIN':
+
+            return({
+                ...state,
+                admin: true
+            });
+
+        case 'GO_OUT':
+
+            try {
+                localStorage.setItem('admin', JSON.stringify({
+                admin: false
+                }));
+            } catch(error) {
+                console.log(error);
+            }
+
+            return({
+                ...state,
+                admin: false
             });
 
         default: 

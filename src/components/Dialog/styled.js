@@ -13,7 +13,7 @@ export const Content = styled.div.attrs({className: 'DialogContent'})`
 `;
 
 export const Title = styled.div.attrs({className: 'DialogTitle'})`
-    font-size: 26px;
+    font-size: 20px;
     color: ${colors.blueDark};
     margin-bottom: 20px;
 `;
