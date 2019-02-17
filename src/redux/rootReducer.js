@@ -25,7 +25,8 @@ const initialState = {
     total_task_count: 5,
     pageNumber: 1,
     sortType: 'id', // id or username or email or status
-    sortOrder: 'asc' // asc or desc
+    sortOrder: 'asc', // asc or desc
+    createTask: false
 }
 
 export default function rootReducer(state=initialState, action) {
@@ -47,6 +48,20 @@ export default function rootReducer(state=initialState, action) {
                 pageNumber: payload.pageNumber,
                 sortType: payload.sortType,
                 sortOrder: payload.sortOrder
+            });
+
+        case 'SHOW_CREATE_TASK':
+
+            return({
+                ...state,
+                createTask: true
+            });
+
+        case 'HIDDEN_CREATE_TASK':
+
+            return({
+                ...state,
+                createTask: false
             });
 
         default: 

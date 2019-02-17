@@ -3,7 +3,9 @@ import axios from 'axios';
 import {
     GETTING_TASKS_START, 
     GETTING_TASKS_SUCCESS, 
-    GETTING_TASKS_ERROR
+    GETTING_TASKS_ERROR,
+    SHOW_CREATE_TASK,
+    HIDDEN_CREATE_TASK
 } from './actionTypes';
 
 export function gettingTasks(pageNumber, sortType, sortOrder) {
@@ -49,4 +51,20 @@ export function gettingTasksError(error) {
     return({
         type: GETTING_TASKS_ERROR
     });
+}
+
+export function showCreateTask() {
+    return(
+        {
+            type: SHOW_CREATE_TASK
+        }
+    );
+}
+
+export function hiddenCreateTask() {
+    return(
+        {
+            type: HIDDEN_CREATE_TASK
+        }
+    );
 }

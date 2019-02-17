@@ -6,21 +6,23 @@ import {Wrapper, Close} from './styled';
 export default class Overlay extends PureComponent {
 
     static propTypes = {
-        children: PropTypes.node
+        children: PropTypes.node,
+        close: PropTypes.func
       }
     
       static defaultProps = {
-        children: ''
+        children: '',
+        close: () => null
       }
 
     render() {
 
-        const{children} = this.props;
+        const{children, close} = this.props;
 
     return (
         <Wrapper>
             {children}
-            <Close />
+            <Close onClick={close} />
         </Wrapper>
     )
     }

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import {Wrapper, Content, Title, Footer} from './styled';
 
-import Button from '../Button/Button';
-
 export default class Dialog extends PureComponent {
 
     static propTypes = {
@@ -27,18 +25,6 @@ export default class Dialog extends PureComponent {
                 <Title>{title}</Title>
                 {children}
             </Content>
-            <Footer>
-                <Button
-                    type="blueDark"
-                    >
-                    Cancel
-                </Button>
-                <Button
-                type="blue"
-                >
-                Ok
-                </Button>
-            </Footer>
         </Wrapper>
     )
   }

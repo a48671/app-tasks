@@ -19,5 +19,11 @@ export const InputStyle = styled.input.attrs({className: 'InputStyle'})`
     padding: 10px;
     font-size: 14px;
     color: ${colors.blueDark};
-    border: 1px solid ${colors.blueDark};
+    border: 1px solid ${props => props.validated ? colors.blueDark : 'red'};
+`;
+export const Error = styled.div.attrs({className: 'InputError'})`
+    text-align: left;
+    color: red;
+    font-size: 12px;
+    padding: 5px 0 0;
 `;

@@ -11,7 +11,7 @@ import PageNumber from './components/PageNumber/PageNumber';
 import Task from './components/Task/Task';
 import CreateTask from './components/CreateTask/CreateTask';
 
-import {gettingTasks} from './redux/actions/actions';
+import {gettingTasks, showCreateTask} from './redux/actions/actions';
 
 class App extends Component {
 
@@ -20,8 +20,10 @@ class App extends Component {
     pageNumber: PropTypes.number,
     totalTasks: PropTypes.number,
     gettingTasks: PropTypes.func,
+    showCreateTask: PropTypes.func,
     sortType: PropTypes.string,
-    sortOrder: PropTypes.string
+    sortOrder: PropTypes.string,
+    createTask: PropTypes.bool
   }
 
   static defaultProps = {
@@ -29,8 +31,10 @@ class App extends Component {
     pageNumber: 1,
     totalTasks: 0,
     gettingTasks: () => null,
+    showCreateTask: () => null,
     sortType: 'id',
-    sortOrder: 'asc'
+    sortOrder: 'asc',
+    createTask: false
   }
 
   componentDidMount() {
@@ -45,7 +49,9 @@ class App extends Component {
       pageNumber, 
       sortType,
       sortOrder,
-      gettingTasks
+      gettingTasks,
+      showCreateTask,
+      createTask
     } = this.props;
 
     const renderPagination = () => {
@@ -98,6 +104,7 @@ class App extends Component {
             </Button>
             <Button
                 type="white"
+                onClickHandler={showCreateTask}
             >
               Add task
             </Button>
@@ -127,7 +134,8 @@ class App extends Component {
                 {renderPagination()}
               </Pagination>
           </Container>
-          <CreateTask />
+          {createTask ? <CreateTask /> : null}
+          
         </Footer>
       </React.Fragment>
     );
@@ -140,13 +148,15 @@ function mapStateToProps(state) {
     pageNumber: state.pageNumber,
     totalTasks: Number(state.total_task_count),
     sortType: state.sortType, 
-    sortOrder: state.sortOrder
+    sortOrder: state.sortOrder,
+    createTask: state.createTask
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     gettingTasks: (pageNumber, sortType, sortOrder) => dispatch(gettingTasks(pageNumber, sortType, sortOrder)),
+    showCreateTask: () => dispatch(showCreateTask()),
   }
 }
 

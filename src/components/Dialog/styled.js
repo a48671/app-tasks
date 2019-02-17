@@ -17,9 +17,3 @@ export const Title = styled.div.attrs({className: 'DialogTitle'})`
     color: ${colors.blueDark};
     margin-bottom: 20px;
 `;
-
-export const Footer = styled.div.attrs({className: 'DialogFooter'})`
-    display: flex;
-    justify-content: center;
-    padding: 10px 20px 20px;
-`;
